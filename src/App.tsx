@@ -4,8 +4,7 @@ import TodoPage from "./pages/TodoPage";
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<NonExistingComponent />} />
-      <Route path="/todos" element={<TodoPage />} />
+      <Route path="/" element={<TodoPage />} />
     </Routes>
   );
 }

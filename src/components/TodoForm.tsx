@@ -35,8 +35,8 @@ function TodoForm() {
             type="text"
             id="title"
             className="form-input"
-            value={tittle}
-            onChange={(e) => setTittle(e.target.value)}
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
             placeholder="Enter todo title"
             required
           />
