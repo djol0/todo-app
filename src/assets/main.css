@@ -9,6 +9,8 @@
   --danger-color: #ef4444;
   --success-color: #10b981;
   --border-color: #e5e7eb;
+  --button-hover-color: #4f46e5;
+  --colum-hover-color: #f9fafb;
 }
 
 * {
@@ -26,7 +28,7 @@ body {
 }
 
 .container {
-  max-width: 800px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 2rem 1rem;
 }
@@ -127,3 +129,111 @@ body {
 .form-group {
   margin-bottom: 1rem;
 } 
+
+.all-columns {
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;
+}
+
+.column-container {
+  border: 1px solid var(--border-color);
+  border-radius: 0.25rem;
+  max-width: 250px;
+  min-width: 200px;
+  min-height: 200px;
+  font-size: 15px;
+  color: var(--text-color);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  padding-top: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin-right: 5px;
+}
+
+.column-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.column-header-delete {
+  border: 1px solid var(--border-color);
+  border-radius: 0.25rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  width: 25px;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;    
+  cursor: pointer;
+}
+
+.column-header-delete:hover {
+  color: white;
+  background-color: var(--danger-color);
+}
+
+.add-column-button {
+  display: flex;
+  font-size: 30px;
+  height: 35px;
+  width: 35px;
+  min-width: 35px;
+  justify-content: center;
+  align-items: center;      
+  border-radius: 0.25rem;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+}
+
+.add-column-button:hover {
+  color: white;
+  background-color: var(--button-hover-color);
+}
+
+.new-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.add-column-buttons-container {
+  display: flex;
+  flex-direction: row-reverse;
+  margin-top: 2px;
+}
+
+.add-column-single-button {
+  display: flex;
+  font-size: 20px;
+  height: 25px;
+  width: 25px;
+  justify-content: center;
+  align-items: center;      
+  border-radius: 0.25rem;
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  margin-right: 2px;
+  color: var(--text-light-color);
+
+}
+
+.add-column-single-button:hover {
+  color: white;
+  background-color: var(--button-hover-color);
+}
+
+.add-column-input {
+  width: 200px;
+  height: 35px;
+  color: var(--text-light-color);
+  padding-left: 5px;
+  border-color: var(--button-hover-color);
+  border-radius: 0.25rem;
+}
+
+.btn-margin-right {
+  margin-right: 5px;
+}
