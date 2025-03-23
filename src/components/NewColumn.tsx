@@ -4,7 +4,7 @@ import { useColumnStore } from "../store/todoStore";
 function NewColumn() {
     const columns = useColumnStore((state) => state.columns);
     const addColumn = useColumnStore((state) => state.addColumn);
-    const [newColumn, setNewColumn] = useState(false);
+    const [newColumn, setNewColumn] = useState<boolean>(false);
     const inputRef = useRef<HTMLInputElement>(null);
 
     const getNewId = (): number => {

@@ -23,7 +23,7 @@ function TodoItem({ todo }: TodoItemProps) {
         onChange={() => toggleTodo(todo.id)}
       />
       <div className="todo-content">
-        <h3>{todo.title}</h3>
+        <h4>{todo.title}</h4>
         {todo.description && <p>{todo.description}</p>}
         {todo.dueDate && (
           <p className="due-date">Due: {formatDate(todo.dueDate)}</p>
@@ -39,3 +39,4 @@ function TodoItem({ todo }: TodoItemProps) {
 }
 
 export default TodoItem;
+
