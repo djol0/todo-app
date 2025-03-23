@@ -8,7 +8,9 @@ import { Todo } from "../types/todo";
 function TodoList() {
   const columns = useColumnStore((state) => state.columns);
   const todos = useTodoStore((state) => state.todos);
+  const moveSingleTodoToColumn = useTodoStore((state) => state.moveSingleTodoToColumn);
   const [filter, setFilter] = useState("all");
+  const [targetedTodo, setTargetedTodo] = useState(null)
 
   const filteredTodos = todos.filter((todo) => {
     if (filter === "active") return !todo.completed;
@@ -31,6 +33,12 @@ function TodoList() {
 
     return map;
   }, [columns, filteredTodos]);
+
+  const handleDrop = (id: number): void => {
+      if(targetedTodo) {
+        moveSingleTodoToColumn(targetedTodo, id)
+      }
+  }
 
   return (
     <div>
@@ -62,6 +70,8 @@ function TodoList() {
             title={column.title} 
             id={column.id} 
             todos={groupedTodos.get(column.id) || []} 
+            setTargetedTodo={setTargetedTodo}
+            handleDrop={handleDrop}
           />
         ))}
         <NewColumn />

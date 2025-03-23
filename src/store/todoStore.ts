@@ -8,6 +8,7 @@ interface TodoState {
   deleteTodo: (id: string) => void;
   deleteColumnTodos: (columnId: number) => void;
   moveTodosToColumn: (oldColumnId: number, newColumnId: number) => void;
+  moveSingleTodoToColumn: (todo: Todo, newColumnId: number) => void;
 }
 
 interface ColumnState {
@@ -37,6 +38,12 @@ export const useTodoStore = create<TodoState>((set) => ({
     set((state) => ({
       todos: state.todos.map((todo) =>
         todo.columnId === oldColumnId ? { ...todo, columnId: newColumnId } : todo
+      ),
+    })),
+    moveSingleTodoToColumn: (todo: Todo, newColumnId: number) =>
+    set((state) => ({
+      todos: state.todos.map((singleTodo) =>
+        singleTodo.id === todo.id ? { ...singleTodo, columnId: newColumnId } : singleTodo
       ),
     })),
 }));

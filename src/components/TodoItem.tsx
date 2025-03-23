@@ -3,9 +3,10 @@ import { Todo } from "../types/todo";
 
 interface TodoItemProps {
   todo: Todo;
+  setTargetedTodo: Function;
 }
 
-function TodoItem({ todo }: TodoItemProps) {
+function TodoItem({ todo, setTargetedTodo }: TodoItemProps) {
   const toggleTodo = useTodoStore((state) => state.toggleTodo);
   const deleteTodo = useTodoStore((state) => state.deleteTodo);
 
@@ -14,8 +15,14 @@ function TodoItem({ todo }: TodoItemProps) {
     return new Date(date).toLocaleDateString();
   };
 
+  const handledragStart = (): void => setTargetedTodo(todo)
+
   return (
-    <div className={`todo-item ${todo.completed ? "completed" : ""}`}>
+    <div 
+      className={`todo-item ${todo.completed ? "completed" : ""}`}
+      draggable="true"
+      onDragStart={handledragStart}
+    >
       <input
         type="checkbox"
         className="checkbox"

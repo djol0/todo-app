@@ -360,3 +360,7 @@ body {
 .error-border {
   border-color: var(--danger-color);
 }
+
+.dragover-column {
+  border: 1px solid var(--text-color);
+}
