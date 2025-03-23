@@ -1,6 +1,16 @@
 import { create } from "zustand";
 import { Todo, Column } from "../types/todo";
 
+const loadTodos = (): Todo[] => {
+  const storedTodos = localStorage.getItem("todos");
+  return storedTodos ? JSON.parse(storedTodos) : [];
+};
+
+const loadColumns = (): Column[] => {
+  const storedColumns = localStorage.getItem("columns");
+  return storedColumns ? JSON.parse(storedColumns) : [{ title: "Todo task", id: 1 }];
+};
+
 interface TodoState {
   todos: Todo[];
   addTodo: (todo: Todo) => void;
@@ -18,41 +28,63 @@ interface ColumnState {
 }
 
 export const useTodoStore = create<TodoState>((set) => ({
-  todos: [],
-  addTodo: (todo: Todo) => set((state) => ({ todos: [...state.todos, todo] })),
+  todos: loadTodos(),
+  addTodo: (todo: Todo) =>
+    set((state) => {
+      const updatedTodos = [...state.todos, todo];
+      localStorage.setItem("todos", JSON.stringify(updatedTodos));
+      return { todos: updatedTodos };
+    }),
   toggleTodo: (id: string) =>
-    set((state) => ({
-      todos: state.todos.map((todo) =>
+    set((state) => {
+      const updatedTodos = state.todos.map((todo) =>
         todo.id === id ? { ...todo, completed: !todo.completed } : todo
-      ),
-    })),
+      );
+      localStorage.setItem("todos", JSON.stringify(updatedTodos));
+      return { todos: updatedTodos };
+    }),
   deleteTodo: (id: string) =>
-    set((state) => ({
-      todos: state.todos.filter((todo) => todo.id !== id),
-    })),
+    set((state) => {
+      const updatedTodos = state.todos.filter((todo) => todo.id !== id);
+      localStorage.setItem("todos", JSON.stringify(updatedTodos));
+      return { todos: updatedTodos };
+    }),
   deleteColumnTodos: (columnId: number) =>
-    set((state) => ({
-      todos: state.todos.filter((todo) => todo.columnId !== columnId),
-    })),
+    set((state) => {
+      const updatedTodos = state.todos.filter((todo) => todo.columnId !== columnId);
+      localStorage.setItem("todos", JSON.stringify(updatedTodos));
+      return { todos: updatedTodos };
+    }),
   moveTodosToColumn: (oldColumnId: number, newColumnId: number) =>
-    set((state) => ({
-      todos: state.todos.map((todo) =>
+    set((state) => {
+      const updatedTodos = state.todos.map((todo) =>
         todo.columnId === oldColumnId ? { ...todo, columnId: newColumnId } : todo
-      ),
-    })),
-    moveSingleTodoToColumn: (todo: Todo, newColumnId: number) =>
-    set((state) => ({
-      todos: state.todos.map((singleTodo) =>
+      );
+      localStorage.setItem("todos", JSON.stringify(updatedTodos));
+      return { todos: updatedTodos };
+    }),
+  moveSingleTodoToColumn: (todo: Todo, newColumnId: number) =>
+    set((state) => {
+      const updatedTodos = state.todos.map((singleTodo) =>
         singleTodo.id === todo.id ? { ...singleTodo, columnId: newColumnId } : singleTodo
-      ),
-    })),
+      );
+      localStorage.setItem("todos", JSON.stringify(updatedTodos));
+      return { todos: updatedTodos };
+    }),
 }));
 
 export const useColumnStore = create<ColumnState>((set) => ({
-  columns: [{title: 'Todo task', id: 1}],
-  addColumn: (column: Column) => set((state) => ({ columns: [...state.columns, column] })),
+  columns: loadColumns(),
+  addColumn: (column: Column) =>
+    set((state) => {
+      const updatedColumns = [...state.columns, column];
+      localStorage.setItem("columns", JSON.stringify(updatedColumns));
+      return { columns: updatedColumns };
+    }),
   deleteColumn: (id: number) =>
-    set((state) => ({
-      columns: state.columns.filter((todo) => todo.id !== id),
-    }))
+    set((state) => {
+      const updatedColumns = state.columns.filter((column) => column.id !== id);
+      localStorage.setItem("columns", JSON.stringify(updatedColumns));
+      return { columns: updatedColumns };
+    }),
 }));
