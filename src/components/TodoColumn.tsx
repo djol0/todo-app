@@ -23,7 +23,10 @@ function TodoColumn({title, id, todos, setTargetedTodo, handleDrop }: TodoColumn
         }
     }
 
-    const handleDropTodo = (): void => handleDrop(id)
+    const handleDropTodo = (): void => {
+        setDragOver(false)
+        handleDrop(id)
+    }
 
 
     const handleDragOverTrue = (event: React.DragEvent<HTMLDivElement>): void => {
@@ -33,7 +36,7 @@ function TodoColumn({title, id, todos, setTargetedTodo, handleDrop }: TodoColumn
 
     const handleDragOverFalse = (event: React.DragEvent<HTMLDivElement>): void => {
         event.preventDefault()
-        setDragOver(true)
+        setDragOver(false)
     }
 
     return (
