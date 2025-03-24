@@ -5,6 +5,7 @@ import { useColumnStore } from "../store/todoStore";
 function TodoForm() {
   const addTodo = useTodoStore((state) => state.addTodo);
   const columns = useColumnStore((state) => state.columns);
+  const getNextOrderId = useTodoStore((state) => state.getNextOrderId)
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -28,6 +29,7 @@ function TodoForm() {
         id: Date.now().toString(),
         title: title,
         description,
+        displayOrder: getNextOrderId(),
         dueDate,
         columnId: columnId,
         completed: false,

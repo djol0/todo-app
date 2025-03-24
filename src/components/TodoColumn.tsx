@@ -57,7 +57,7 @@ function TodoColumn({title, id, todos, setTargetedTodo, handleDrop }: TodoColumn
                 </div>}
             </div>
 
-            {todos.map((todo) => (
+            {todos.sort((a, b) => a.displayOrder - b.displayOrder).map((todo) => (
                 <TodoItem 
                     key={todo.id}
                     todo={todo}

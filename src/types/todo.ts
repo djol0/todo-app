@@ -2,6 +2,7 @@ export interface Todo {
   id: string;
   title: string;
   columnId: number;
+  displayOrder: number;
   description: string;
   dueDate?: string;
   completed: boolean;

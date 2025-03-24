@@ -19,6 +19,7 @@ interface TodoState {
   deleteColumnTodos: (columnId: number) => void;
   moveTodosToColumn: (oldColumnId: number, newColumnId: number) => void;
   moveSingleTodoToColumn: (todo: Todo, newColumnId: number) => void;
+  getNextOrderId: () => number;
 }
 
 interface ColumnState {
@@ -27,7 +28,7 @@ interface ColumnState {
   deleteColumn: (id: number) => void;
 }
 
-export const useTodoStore = create<TodoState>((set) => ({
+export const useTodoStore = create<TodoState>((set, get) => ({
   todos: loadTodos(),
   addTodo: (todo: Todo) =>
     set((state) => {
@@ -57,20 +58,40 @@ export const useTodoStore = create<TodoState>((set) => ({
     }),
   moveTodosToColumn: (oldColumnId: number, newColumnId: number) =>
     set((state) => {
+      const newOrderId = get().getNextOrderId();
       const updatedTodos = state.todos.map((todo) =>
-        todo.columnId === oldColumnId ? { ...todo, columnId: newColumnId } : todo
+        todo.columnId === oldColumnId ? 
+          { ...todo, columnId: newColumnId, displayOrder: newOrderId } 
+        : 
+          todo
       );
       localStorage.setItem("todos", JSON.stringify(updatedTodos));
       return { todos: updatedTodos };
     }),
   moveSingleTodoToColumn: (todo: Todo, newColumnId: number) =>
     set((state) => {
+      const newOrderId = get().getNextOrderId();
       const updatedTodos = state.todos.map((singleTodo) =>
-        singleTodo.id === todo.id ? { ...singleTodo, columnId: newColumnId } : singleTodo
+        singleTodo.id === todo.id ? 
+          singleTodo.columnId === newColumnId ?
+            { ...singleTodo, columnId: newColumnId } 
+            :
+            { ...singleTodo, columnId: newColumnId, displayOrder: newOrderId } 
+        : 
+          singleTodo
       );
       localStorage.setItem("todos", JSON.stringify(updatedTodos));
       return { todos: updatedTodos };
     }),
+
+
+    getNextOrderId: () => {
+      const { todos } = get(); 
+      if (todos.length === 0) return 1;
+      return Math.max(...todos.map((todo) => todo.displayOrder), 0) + 1;
+    },
+
+
 }));
 
 export const useColumnStore = create<ColumnState>((set) => ({
