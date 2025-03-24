@@ -1,7 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-
 import TodoForm from "../components/TodoForm";
-import TodoList from "../components/TodoList";
 
 function TodoPage() {
   const navigate = useNavigate()
