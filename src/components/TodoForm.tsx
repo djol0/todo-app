@@ -15,14 +15,18 @@ function TodoForm() {
   const [selected, setSelected] = useState<string>("Select column");
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const [error, setError] = useState(false)
+  const [errorTitle, setErrorTitle] = useState<boolean>(false);
+  const [errorColumn, setErrorColumn] = useState<boolean>(false);
+  const [success, setSuccess] = useState<boolean>(false);
 
   const handleChangeDate = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDueDate(e.target.value);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
-    setError(false)
+    setSuccess(false)
+    setErrorTitle(false)
+    setErrorColumn(false)
     e.preventDefault();
     if (title.trim() && columnId > 0) {
       addTodo({
@@ -38,14 +42,16 @@ function TodoForm() {
       setTitle("");
       setDescription("");
       setDueDate("");
+      setSuccess(true)
     } 
  
-    if(columnId === 0) {
-      setError(true)
+    if(title === "") {
+      setErrorTitle(true)
     }
 
-    setSelected("Select column")
-    setColumnId(0)
+    if(columnId === 0) {
+      setErrorColumn(true)
+    }
   };
 
   useEffect(() => {
@@ -67,11 +73,10 @@ function TodoForm() {
           <input
             type="text"
             id="title"
-            className="form-input"
+            className={errorTitle ? "form-input error-border" : "form-input"}
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Enter todo title"
-            required
           />
         </div>
         <div className="form-group">
@@ -91,7 +96,7 @@ function TodoForm() {
         >
           <label htmlFor="description">Column</label>
           <div
-            className={error ? "select error-border" : "select"}
+            className={errorColumn ? "select error-border" : "select"}
             onClick={() => setIsOpen(!isOpen)}
           >
             {selected}
@@ -129,9 +134,14 @@ function TodoForm() {
             onChange={handleChangeDate}
           />
         </div>
-        <button type="submit" className="btn btn-primary">
-          Add Todo
-        </button>
+        <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+          <button type="submit" className="btn btn-primary">
+            Add Todo
+          </button>
+          {success && <p style={{color: 'green', marginLeft: '10px'}}>
+            New task successfully added!
+          </p>}
+        </div>
       </form>
     </div>
   );
