@@ -1,6 +1,6 @@
 {
   "homepage": "http://djol0.github.io/todo-app",
-  "name": "todo-react",
+  "name": "todo-app",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -16,7 +16,9 @@
     "start": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.0.0",
