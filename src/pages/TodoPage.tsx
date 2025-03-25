@@ -4,7 +4,6 @@ import TodoForm from "../components/TodoForm";
 function TodoPage() {
   const navigate = useNavigate()
 
-
   return (
     <div className="container">
       <div className='page-header'>
