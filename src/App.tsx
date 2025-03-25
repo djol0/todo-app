@@ -4,7 +4,7 @@ import CanbanPage from "./pages/CanbanPage";
 
 function App() {
   return (
-    <Router>
+    <Router basename={"/todo-app/"}>
       <Routes>
         <Route path="/" element={<TodoPage />} />
         <Route path="/todos" element={<CanbanPage />} />
